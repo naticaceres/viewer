@@ -11,16 +11,29 @@
     "@types/node": "12.7.1",
     "@types/react": "16.9.1",
     "@types/react-dom": "16.8.5",
+    "bootstrap": "^4.3.1",
+    "dxf": "^4.2.1",
+    "node-sass": "^4.12.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.0",
+    "react-styleguidist": "^9.1.14",
+    "react-svg-pan-zoom": "^3.2.0",
+    "react-svg-pan-zoom-loader": "^1.4.1",
+    "react-virtualized": "^9.21.1",
+    "source-map-explorer": "^2.0.1",
     "typescript": "3.5.3"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,5 +49,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^5.1.10",
+    "@storybook/addon-links": "^5.1.10",
+    "@storybook/addons": "^5.1.10",
+    "@storybook/react": "^5.1.10"
   }
 }

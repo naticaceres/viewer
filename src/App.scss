@@ -1,5 +1,19 @@
+[data-reactroot] {
+  height: 100% !important;
+}
+
+html,
+body,
+#app,
+#root,
+#root > div,
+#app > div {
+  height: 100%;
+}
+
 .App {
   text-align: center;
+  background-color: azure;
 }
 
 .App-logo {
@@ -30,4 +44,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+nav {
+  position: fixed !important;
+  width: 100%;
+}
+
+#container {
+  padding-top: 3rem;
 }
