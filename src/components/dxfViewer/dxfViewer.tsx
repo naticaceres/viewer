@@ -28,7 +28,6 @@ class DxfViewer extends React.Component<DxfViewerProps, DxfViewerState> {
   };
 
   handleFileParsed = (fileParsed: any) => {
-    debugger;
     this.setState({ fileParsed, canvasKey: this.state.canvasKey++ });
   };
 

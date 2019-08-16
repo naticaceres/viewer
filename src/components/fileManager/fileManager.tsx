@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Component } from "react";
 import { any } from "prop-types";
 const dxf = require("dxf/dist/dxf.js");
 
@@ -31,11 +30,9 @@ class FileManager extends React.Component<ViewerProps, ViewerState> {
 
   handleTransform() {
     console.log("transform clicked");
-    debugger;
   }
 
   handleFileUpload = (event: any) => {
-    debugger;
     const file = event.currentTarget.files[0];
     console.log("file upload");
     console.log(file);
@@ -82,10 +79,30 @@ class FileManager extends React.Component<ViewerProps, ViewerState> {
       `</g>
       </g>`;
     parsedFile.svg = parsedFile.svg.replace("</svg>", textLayer + " </svg>");
+    const svgContent = this.prepareSVGForViewing(parsedFile.svg);
+    parsedFile.svg = svgContent;
+  }
+
+  prepareSVGForViewing(svg: string) {
+    const parser = new DOMParser();
+    const xmlSerializer = new XMLSerializer();
+
+    let xmlSvg = parser.parseFromString(svg, "text/html");
+    // we need to return all the shapes inside the svg code, without the svg header.
+    // the svg header needs to be defined in react DOM to control the zoom / pan
+    let svgContent = xmlSvg.body.children[0].children;
+    xmlSvg.body.removeChild(xmlSvg.body.children[0]);
+    const svgNodes = svgContent.length;
+    for (let index = 0; index < svgNodes; index++) {
+      // the elements are taken from the list when appended to the xmldocument. The element taken needs to be the one at the position 0 everytime.
+      xmlSvg.body.appendChild(svgContent[0]);
+    }
+
+    const svgStringContent = xmlSerializer.serializeToString(xmlSvg);
+    return svgStringContent;
   }
 
   render() {
-    //react.fragment does not show in the html template
     return (
       <div className="viewer">
         <button onClick={this.handleTransform}>transform</button>
