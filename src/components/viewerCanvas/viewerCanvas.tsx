@@ -60,7 +60,7 @@ class ViewerCanvas extends React.Component<
       viewBox,
       scale
     });
-    console.log('mousewheel dx:' + dx + ', dy:' + dy, ', scale:' + scale);
+    // console.log('mousewheel dx:' + dx + ', dy:' + dy, ', scale:' + scale);
   }
 
   handleOnMouseDown(event: any) {
@@ -69,7 +69,7 @@ class ViewerCanvas extends React.Component<
       isPanning: true,
       startPoint
     });
-    console.log('mousedown x:'+ startPoint.x + ', y:' + startPoint.y);
+    // console.log('mousedown x:'+ startPoint.x + ', y:' + startPoint.y);
   }
 
   handleOnMouseMove(event: any) {
@@ -82,7 +82,7 @@ class ViewerCanvas extends React.Component<
       endPoint,
       viewBox
     });
-    console.log('mousemove');
+    // console.log('mousemove');
   }
 
   handleOnMouseUp(event: any) {
@@ -96,7 +96,7 @@ class ViewerCanvas extends React.Component<
       viewBox,
       isPanning: false
     });
-    console.log('mouseup');
+    // console.log('mouseup');
   }
 
   getDistance(endPoint: any)  {
@@ -108,7 +108,7 @@ class ViewerCanvas extends React.Component<
       w: this.state.viewBox.w,
       h: this.state.viewBox.h
     };
-    console.log('moved distance dx:' + dx + ', dy:' + dy + ', endpoint{ x:' + endPoint.x + ', y:' + endPoint.y + '}');
+    // console.log('moved distance dx:' + dx + ', dy:' + dy + ', endpoint{ x:' + endPoint.x + ', y:' + endPoint.y + '}');
     return viewBox;
   }
 
@@ -116,13 +116,13 @@ class ViewerCanvas extends React.Component<
     this.setState({
       isPanning: false
     });
-    console.log('mouseleave');
+    // console.log('mouseleave');
   }
 
   render() {
     return (
       <div
-        style={{ height: "100%", maxHeight: "55rem", width: "100%" }}
+        style={{ height: "100%", maxHeight: "50rem", width: "100%" }}
         ref={divElement => (this.divElement = divElement)}
       >
         <div>Zoom value: {this.getZoomValue()}%</div>
@@ -140,7 +140,7 @@ class ViewerCanvas extends React.Component<
             viewBox={this.getViewBoxValue()}
             //preserveAspectRatio={"xMinYMin meet"}
             height="800px"
-            width="900px"            
+            width="1500px"            
             dangerouslySetInnerHTML={{ __html: this.props.drawing.svg }}
             style={{userSelect: 'none'}}
           />
