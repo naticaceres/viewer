@@ -73,7 +73,7 @@ class FileManager extends React.Component<ViewerProps, ViewerState> {
       })
       .join("");
     const textLayer =
-      `<g id="draft" transform="matrix(1 0 0 -1 0 -6.66)" stroke-width="0.0042925">
+      `<g id="draft" transform="matrix(1 0 0 -1 0 -5.93)" stroke-width="0.0042925">
       <g id="ID_0" color="rgb(0,0,0)" stroke="currentColor" fill="none" stroke-width="0.0042925">` +
       textEntities +
       `</g>
@@ -98,14 +98,16 @@ class FileManager extends React.Component<ViewerProps, ViewerState> {
       xmlSvg.body.appendChild(svgContent[0]);
     }
 
+    // narrowing down the stroke-width for better visibility
+    xmlSvg.body.children[0].setAttribute('stroke-width', '0.055%');
+
     const svgStringContent = xmlSerializer.serializeToString(xmlSvg);
     return svgStringContent;
   }
 
   render() {
     return (
-      <div className="viewer">
-        <button onClick={this.handleTransform}>transform</button>
+      <div className="viewer">        
         <input type="file" name="file" onChange={this.handleFileUpload} />
       </div>
     );

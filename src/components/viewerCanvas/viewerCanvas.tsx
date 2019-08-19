@@ -125,7 +125,7 @@ class ViewerCanvas extends React.Component<
         style={{ height: "100%", maxHeight: "55rem", width: "100%" }}
         ref={divElement => (this.divElement = divElement)}
       >
-        <div>Zoom value: {this.getZoomValue()}</div>
+        <div>Zoom value: {this.getZoomValue()}%</div>
         {/* <div>Scale: {this.state.scale}</div> */}
         <div
           className="svg-container"
@@ -139,7 +139,7 @@ class ViewerCanvas extends React.Component<
           <svg
             viewBox={this.getViewBoxValue()}
             //preserveAspectRatio={"xMinYMin meet"}
-            height="900px"
+            height="800px"
             width="900px"            
             dangerouslySetInnerHTML={{ __html: this.props.drawing.svg }}
             style={{userSelect: 'none'}}
