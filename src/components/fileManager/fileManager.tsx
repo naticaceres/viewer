@@ -44,43 +44,53 @@ class FileManager extends React.Component<ViewerProps, ViewerState> {
   };
 
   drawSvgText(parsedFile: any) {
+
+    const parser = new DOMParser();
+    const xmlSerializer = new XMLSerializer();
+
+    let xmlSvg = parser.parseFromString(parsedFile.svg, "text/html");
+
     let id = 100;
+
     let textEntities = parsedFile.parsed.entities
       .filter((e: any) => e.type === "MTEXT")
       .map((e: any) => {
         id = id + 2;
-        return (
-          `<text writing-mode="lr-tb" text-anchor="start" x="` +
-          e.x +
-          `" y="` +
-          e.y +
-          `" font-size="` +
-          e.nominalTextHeight +
-          `" fill="currentColor" id="` +
-          "ID_" +
-          id +
-          `" transform="matrix(1 0 0 -1 0 ` +
-          e.y * 2 +
-          `)">
-     <tspan font-size="` +
-          e.nominalTextHeight +
-          `" baseline-shift="-100%">` +
-          e.string +
-          `</tspan>
-    </text>
-        `
-        );
-      })
-      .join("");
-    const textLayer =
-      `<g id="draft" transform="matrix(1 0 0 -1 0 -5.93)" stroke-width="0.0042925">
-      <g id="ID_0" color="rgb(0,0,0)" stroke="currentColor" fill="none" stroke-width="0.0042925">` +
-      textEntities +
-      `</g>
-      </g>`;
-    parsedFile.svg = parsedFile.svg.replace("</svg>", textLayer + " </svg>");
-    const svgContent = this.prepareSVGForViewing(parsedFile.svg);
-    parsedFile.svg = svgContent;
+        let node = xmlSvg.createElement('text');
+        node.setAttribute('writing-mode', "lr-tb"); // e.drawingDirection === 1 ? 'lr-tb'
+        node.setAttribute("text-anchor", "start"); // e.attachmentPoint === 1 ? 'start'
+        node.setAttribute('x', e.x);
+        node.setAttribute('y', e.y);
+        node.setAttribute('font-size', e.nominalTextHeight);
+        node.setAttribute('fill', 'currentColor');
+        node.setAttribute('id',"ID_" + id );
+        node.setAttribute('transform', "matrix(1 0 0 -1 0 " + e.y * 2 + ")");
+        node.textContent = e.string;
+
+        return node;        
+      });      
+
+    let svgContent = xmlSvg.body.children[0].children;
+    // we need to return all the shapes inside the svg code, without the svg header.
+    // the svg header needs to be defined in react DOM to control the zoom / pan
+    xmlSvg.body.removeChild(xmlSvg.body.children[0]);
+    const svgNodes = svgContent.length;
+    for (let index = 0; index < svgNodes; index++) {
+      // the elements are taken from the list when appended to the xmldocument. The element taken needs to be the one at the position 0 everytime.
+      xmlSvg.body.appendChild(svgContent[0]);
+    }
+
+    textEntities.forEach((element: any) => {
+      xmlSvg.body.children[0].appendChild(element);
+    });
+
+
+    // narrowing down the stroke-width for better visibility
+    xmlSvg.body.children[0].setAttribute('stroke-width', '0.055%');
+
+    const svgStringContent = xmlSerializer.serializeToString(xmlSvg);
+    parsedFile.svg = svgStringContent;
+    return svgStringContent;
   }
 
   prepareSVGForViewing(svg: string) {
