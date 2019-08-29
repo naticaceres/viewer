@@ -28,14 +28,10 @@ class FileManager extends React.Component<ViewerProps, ViewerState> {
     this.props.onFileParsed(parsedFile);
   };
 
-  handleTransform() {
-    console.log("transform clicked");
-  }
-
   handleFileUpload = (event: any) => {
     const file = event.currentTarget.files[0];
     console.log("file upload");
-    console.log(file);
+
     this.setState({ file: file });
 
     this.fileReader = new FileReader();
@@ -44,7 +40,6 @@ class FileManager extends React.Component<ViewerProps, ViewerState> {
   };
 
   drawSvgText(parsedFile: any) {
-
     const parser = new DOMParser();
     const xmlSerializer = new XMLSerializer();
 
@@ -56,19 +51,19 @@ class FileManager extends React.Component<ViewerProps, ViewerState> {
       .filter((e: any) => e.type === "MTEXT")
       .map((e: any) => {
         id = id + 2;
-        let node = xmlSvg.createElement('text');
-        node.setAttribute('writing-mode', "lr-tb"); // e.drawingDirection === 1 ? 'lr-tb'
+        let node = xmlSvg.createElement("text");
+        node.setAttribute("writing-mode", "lr-tb"); // e.drawingDirection === 1 ? 'lr-tb'
         node.setAttribute("text-anchor", "start"); // e.attachmentPoint === 1 ? 'start'
-        node.setAttribute('x', e.x);
-        node.setAttribute('y', e.y);
-        node.setAttribute('font-size', e.nominalTextHeight);
-        node.setAttribute('fill', 'currentColor');
-        node.setAttribute('id',"ID_" + id );
-        node.setAttribute('transform', "matrix(1 0 0 -1 0 " + e.y * 2 + ")");
+        node.setAttribute("x", e.x);
+        node.setAttribute("y", e.y);
+        node.setAttribute("font-size", e.nominalTextHeight);
+        node.setAttribute("fill", "currentColor");
+        node.setAttribute("id", "ID_" + id);
+        node.setAttribute("transform", "matrix(1 0 0 -1 0 " + e.y * 2 + ")");
         node.textContent = e.string;
 
-        return node;        
-      });      
+        return node;
+      });
 
     let svgContent = xmlSvg.body.children[0].children;
     // we need to return all the shapes inside the svg code, without the svg header.
@@ -84,9 +79,8 @@ class FileManager extends React.Component<ViewerProps, ViewerState> {
       xmlSvg.body.children[0].appendChild(element);
     });
 
-
     // narrowing down the stroke-width for better visibility
-    xmlSvg.body.children[0].setAttribute('stroke-width', '0.055%');
+    xmlSvg.body.children[0].setAttribute("stroke-width", "0.055%");
 
     const svgStringContent = xmlSerializer.serializeToString(xmlSvg);
     parsedFile.svg = svgStringContent;
@@ -109,7 +103,7 @@ class FileManager extends React.Component<ViewerProps, ViewerState> {
     }
 
     // narrowing down the stroke-width for better visibility
-    xmlSvg.body.children[0].setAttribute('stroke-width', '0.055%');
+    xmlSvg.body.children[0].setAttribute("stroke-width", "0.055%");
 
     const svgStringContent = xmlSerializer.serializeToString(xmlSvg);
     return svgStringContent;
@@ -117,7 +111,7 @@ class FileManager extends React.Component<ViewerProps, ViewerState> {
 
   render() {
     return (
-      <div className="viewer">        
+      <div className="viewer">
         <input type="file" name="file" onChange={this.handleFileUpload} />
       </div>
     );
