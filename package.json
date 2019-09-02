@@ -15,6 +15,7 @@
     "dxf": "^4.2.1",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
+    "react-container-dimensions": "^1.4.1",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.0",
     "react-styleguidist": "^9.1.14",
@@ -24,6 +25,7 @@
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "compile": "NODE_ENV=production babel src --out-dir lib --copy-files",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build",
     "start": "react-scripts start",
@@ -49,9 +51,19 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
     "@storybook/addon-actions": "^5.1.10",
     "@storybook/addon-links": "^5.1.10",
     "@storybook/addons": "^5.1.10",
-    "@storybook/react": "^5.1.10"
+    "@storybook/react": "^5.1.10",
+    "babel-cli": "^6.26.0",
+    "css-loader": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "sass-loader": "^8.0.0",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^6.0.4",
+    "webpack-cli": "^3.3.7"
   }
 }
