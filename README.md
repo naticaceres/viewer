@@ -42,3 +42,17 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## SEAMGROUP Configurations and step by step guide for deploying manually into viewpoint.
+
+### Setup
+
+To locally run this project you will need to install node https://nodejs.org/en/ - the version should match the one described in package.json (the latest one should work as well, as of 2019).
+
+When the installation is complete, you should be able to run `npm install` on the project's root folder.
+If everything went well, you will be able to run `npm start` and see the project running on localhost:3000
+
+by running `npx webpack` you can generate the library.
+if you get `TypeScript emitted no output for C:\Users\Nati\Documents\demo-projects\dxf-viewer\src\index.tsx.` error, you need to go to tsconfig.json and delete the line `"noEmit": true` then save and rerun `npx webpack`.
+
+To test locally, emulating external configuration, uncomment SampleConfiguration in App.tsx

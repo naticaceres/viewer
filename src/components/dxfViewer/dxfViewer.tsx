@@ -1,6 +1,13 @@
 import * as React from 'react';
 import FileManager from '../fileManager/fileManager';
 import ViewerCanvas from '../viewerCanvas/viewerCanvas';
+import Footer from '../footer';
+
+declare global {
+  interface Window {
+    fileManager: any;
+  }
+}
 
 export interface DxfViewerProps {}
 
@@ -73,18 +80,20 @@ class DxfViewer extends React.Component<DxfViewerProps, DxfViewerState> {
 
   render() {
     return (
-      // <Header />
       this.state.isLoaded && (
         <div
           style={{
             height: 'inherit',
             display: 'grid',
-            gridTemplateRows: '3rem auto',
+            gridTemplateRows: '3rem auto 3rem',
           }}
         >
           <FileManager
             dxfString={this.state.configuration.dxfString}
             onFileParsed={fileParsed => this.handleFileParsed(fileParsed)}
+            ref={fileManager => {
+              window.fileManager = fileManager;
+            }}
           />
           {this.state.configuration.dxfString && (
             <div
@@ -102,6 +111,7 @@ class DxfViewer extends React.Component<DxfViewerProps, DxfViewerState> {
             key={this.state.canvasKey}
             drawing={this.state.fileParsed}
           />
+          <Footer />
         </div>
       )
     );
